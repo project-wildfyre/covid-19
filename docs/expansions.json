@@ -1,0 +1,72 @@
+{
+  "resourceType" : "Bundle",
+  "id" : "c788441a-5fc7-4961-82bf-c053abe5a494",
+  "meta" : {
+    "lastUpdated" : "2020-03-27T06:53:40.327+00:00"
+  },
+  "type" : "collection",
+  "entry" : [{
+    "resource" : {
+      "resourceType" : "ValueSet",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>This value set contains 1 concepts</p><p style=\"border: black 1px dotted; background-color: #EEEEEE; padding: 8px\">Expansion based on SNOMED CT International edition 09-Mar 2020</p><p>All codes from system <a href=\"http://hl7.org/fhir/R4/codesystem-snomedct.html\"><code>http://snomed.info/sct</code></a></p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td><td><b>Definition</b></td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-161941007\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=161941007\">161941007</a></td><td>Shortness of breath at rest</td><td/></tr></table></div>"
+      },
+      "status" : "active",
+      "expansion" : {
+        "identifier" : "urn:uuid:73fd204f-2ed7-4031-ab19-c91a161266b9",
+        "timestamp" : "2020-03-27T06:00:58.016Z",
+        "parameter" : [{
+          "name" : "limitedExpansion",
+          "valueBoolean" : true
+        },
+        {
+          "name" : "version",
+          "valueString" : "http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20200309"
+        }],
+        "contains" : [{
+          "system" : "http://snomed.info/sct",
+          "code" : "161941007",
+          "display" : "Shortness of breath at rest"
+        }]
+      }
+    }
+  },
+  {
+    "resource" : {
+      "resourceType" : "ValueSet",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>This value set contains 3 concepts</p><p style=\"border: black 1px dotted; background-color: #EEEEEE; padding: 8px\">Expansion based on SNOMED CT International edition 09-Mar 2020</p><p>All codes from system <a href=\"http://hl7.org/fhir/R4/codesystem-snomedct.html\"><code>http://snomed.info/sct</code></a></p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td><td><b>Definition</b></td></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-840546002\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840546002\">840546002</a></td><td>Exposure to severe acute respiratory syndrome coronavirus 2 (event)</td><td/></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-840544004\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840544004\">840544004</a></td><td>Suspected disease caused by severe acute respiratory coronavirus 2 (situation)</td><td/></tr><tr><td style=\"white-space:nowrap\"><a name=\"http---snomed.info-sct-840533007\"> </a><a href=\"http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840533007\">840533007</a></td><td>Severe acute respiratory syndrome coronavirus 2 (organism)</td><td/></tr></table></div>"
+      },
+      "status" : "active",
+      "expansion" : {
+        "identifier" : "urn:uuid:e49fa184-39dc-4056-8aaf-1ede775af1be",
+        "timestamp" : "2020-03-27T06:26:21.035Z",
+        "parameter" : [{
+          "name" : "limitedExpansion",
+          "valueBoolean" : true
+        },
+        {
+          "name" : "version",
+          "valueString" : "http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20200309"
+        }],
+        "contains" : [{
+          "system" : "http://snomed.info/sct",
+          "code" : "840546002",
+          "display" : "Exposure to severe acute respiratory syndrome coronavirus 2 (event)"
+        },
+        {
+          "system" : "http://snomed.info/sct",
+          "code" : "840544004",
+          "display" : "Suspected disease caused by severe acute respiratory coronavirus 2 (situation)"
+        },
+        {
+          "system" : "http://snomed.info/sct",
+          "code" : "840533007",
+          "display" : "Severe acute respiratory syndrome coronavirus 2 (organism)"
+        }]
+      }
+    }
+  }]
+}

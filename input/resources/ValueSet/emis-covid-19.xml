@@ -1,0 +1,33 @@
+<ValueSet xmlns="http://hl7.org/fhir">
+   <id value="emis-covid-19"></id>
+   <url value="https://interopen.github.io/covid-19/ValueSet/emis-covid-19"></url>
+   <version value="1.0.0"></version>
+   <name value="COVID-19 EMIS Codes"></name>
+   <title value="COVID-19 EMIS Codes"></title>
+   <status value="draft"></status>
+   <date value="2019-11-04T00:00:00+00:00"></date>
+   <publisher value="INTEROPen"></publisher>
+   <contact>
+      <name value="INTEROPen"></name>
+      <telecom>
+         <!-- Or whatever URL and/or email address(es) are appropriate -->
+         <system value="other"></system>
+         <value value="https://interopen.ryver.com/"></value>
+      </telecom>
+   </contact>
+   <description value="Sample of EMIS COVID-19 Codes"></description>
+   <copyright value="This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."></copyright>
+   <compose>
+      <include>
+         <system value="http://read.info/readv2"></system>
+         <concept>
+            <code value="EMISNQSU106"/>
+            <display value="Suspected 2019-nCoV (Wuhan) infection"/>
+         </concept>
+         <concept>
+            <code value="EMISNQEX58"></code>
+            <display value="Exposure to 2019-nCoV (Wuhan) infection"></display>
+         </concept>
+      </include>
+   </compose>
+</ValueSet>

@@ -1,0 +1,33 @@
+﻿UK COVID-19 Support : Validation Results
+=========================================
+
+err = 14, warn = 10, info = 0
+IG Publisher Version: v1.0.74-SNAPSHOT
+Generated Fri Mar 27 06:53:50 GMT 2020. FHIR version 4.0.1 for covid19.r4#0.2.0 (canonical = https://interopen.github.io/covid-19)
+
+ Build Errors : 0 / 1
+ /Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19 : 3 / 1
+ /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/conceptmap/readv2-snomed-covid19 : 0 / 1
+ /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/covid-19-red-flags : 0 / 1
+ /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/emis-covid-19 : 1 / 1
+ /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/snomed-covid-19 : 3 / 1
+</table>
+== n/a ==
+WARNING: ImplementationGuide.id: The Implementation Guide Resource id should be covid19.r4
+== /Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19.xml ==
+ERROR: https://interopen.github.io/covid-19/ImplementationGuide/covid-19: Conformance resource /Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19.xml - the canonical URL (https://interopen.github.io/covid-19/ImplementationGuide/interopen.covid19) does not match the URL (https://interopen.github.io/covid-19/ImplementationGuide/covid-19)
+ERROR: ImplementationGuide.url: Resource id/url mismatch: interopen.covid19/https://interopen.github.io/covid-19/ImplementationGuide/covid-19
+WARNING: ImplementationGuide/interopen.covid19: ImplementationGuide: ig-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]
+ERROR: /Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19: URL Mismatch https://interopen.github.io/covid-19/ImplementationGuide/interopen.covid19 vs https://interopen.github.io/covid-19/ImplementationGuide/covid-19
+== /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ConceptMap/readv2-snomed-covid19.xml ==
+WARNING: ConceptMap/readv2-snomed-covid19: ConceptMap: cmd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]
+== /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/covid-19-red-flags.xml ==
+WARNING: ValueSet/covid-19-red-flags: ValueSet: vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]
+== /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/emis-covid-19.xml ==
+WARNING: ValueSet/emis-covid-19: ValueSet: vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]
+ERROR: emis-covid-19: Error from server: Unable to provide support for code system http://read.info/readv2
+== /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/snomed-covid-19.xml ==
+ERROR: https://interopen.github.io/covid-19/ValueSet/snomed-covid-id: Conformance resource /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/snomed-covid-19.xml - the canonical URL (https://interopen.github.io/covid-19/ValueSet/snomed-covid-19) does not match the URL (https://interopen.github.io/covid-19/ValueSet/snomed-covid-id)
+ERROR: ValueSet.url: Resource id/url mismatch: snomed-covid-19/https://interopen.github.io/covid-19/ValueSet/snomed-covid-id
+WARNING: ValueSet/snomed-covid-19: ValueSet: vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]
+ERROR: /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/snomed-covid-19: URL Mismatch https://interopen.github.io/covid-19/ValueSet/snomed-covid-19 vs https://interopen.github.io/covid-19/ValueSet/snomed-covid-id

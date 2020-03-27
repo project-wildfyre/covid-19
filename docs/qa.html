@@ -1,0 +1,152 @@
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- broken links = 1, errors = 7, warn = 5, info = 0 -->
+<head>
+  <title>UK COVID-19 Support : Validation Results</title>
+  <link href="fhir.css" rel="stylesheet"/>
+  <style>
+    span.flip  { background-color: #4CAF50; color: white; border: solid 1px #a6d8a8; padding: 2px }
+  </style>
+  <script>
+    function flip(id) {
+      var span = document.getElementById('s'+id);
+      var div = document.getElementById(id);
+      if (document.getElementById('s'+id).innerHTML == 'Show Reasoning') {
+        div.style.display = 'block';
+        span.innerHTML = 'Hide Reasoning';
+      } else {
+        div.style.display = 'none';
+        span.innerHTML = 'Show Reasoning';
+      }
+    }
+  </script>
+</head>
+<body style="margin: 20px; background-color: #ffffff">
+ <h1>Validation Results for UK COVID-19 Support</h1>
+ <p>Generated Fri Mar 27 06:53:50 GMT 2020, FHIR version 4.0.1 for covid19.r4#0.2.0 (canonical = <a href="https://interopen.github.io/covid-19">https://interopen.github.io/covid-19</a> (<a href="https://interopen.github.io/covid-19/history.html">history</a>))</p>
+<p>IG Publisher Version: v1.0.74-SNAPSHOT</p>
+<p><a href="#suppressed">10 Suppressed Errors</a></p>
+ <p>HL7 Publication check:</p> <ul><li>n/a - not an HL7.org or FHIR.org implementation guide</li></ul>
+
+ <table class="grid">
+   <tr>
+     <td><b>Filename</b></td><td><b>Errors</b></td><td><b>Information messages &amp; Warnings</b></td>
+   </tr>
+   <tr style="background-color: #EFFFEF">
+     <td><a href="#internal"><b>Build Errors</b></a></td><td><b>0</b></td><td><b>1</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><a href="#_Users_kevinmayfield_Development_wildfyre_covid-19_input_covid-19"><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19</b></a></td><td><b>3</b></td><td><b>1</b></td>
+   </tr>
+   <tr style="background-color: #EFFFEF">
+     <td><a href="#_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_conceptmap_readv2-snomed-covid19"><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/conceptmap/readv2-snomed-covid19</b></a></td><td><b>0</b></td><td><b>1</b></td>
+   </tr>
+   <tr style="background-color: #EFFFEF">
+     <td><a href="#_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_covid-19-red-flags"><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/covid-19-red-flags</b></a></td><td><b>0</b></td><td><b>1</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><a href="#_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_emis-covid-19"><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/emis-covid-19</b></a></td><td><b>1</b></td><td><b>1</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><a href="#_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_snomed-covid-19"><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/snomed-covid-19</b></a></td><td><b>3</b></td><td><b>1</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="internal"> </a>
+<h2><a href="">n/a</a></h2>
+ <table class="grid">
+   <tr style="background-color: #ffebcc">
+     <td><b>ImplementationGuide.id</b></td><td><b>warning</b></td><td><b>The Implementation Guide Resource id should be covid19.r4</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="_Users_kevinmayfield_Development_wildfyre_covid-19_input_covid-19"> </a>
+<h2><a href="ImplementationGuide-interopen.covid19.html">/Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19.xml</a></h2>
+ <table class="grid">
+   <tr>
+     <td><b>Path</b></td><td><b>Severity</b></td><td><b>Message</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>https://interopen.github.io/covid-19/ImplementationGuide/covid-19</b></td><td><b>error</b></td><td><b>Conformance resource /Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19.xml - the canonical URL (https://interopen.github.io/covid-19/ImplementationGuide/interopen.covid19) does not match the URL (https://interopen.github.io/covid-19/ImplementationGuide/covid-19)</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>ImplementationGuide.url</b></td><td><b>error</b></td><td><b>Resource id/url mismatch: interopen.covid19/https://interopen.github.io/covid-19/ImplementationGuide/covid-19</b></td>
+   </tr>
+   <tr style="background-color: #ffebcc">
+     <td><b>ImplementationGuide/interopen.covid19: ImplementationGuide</b></td><td><b>warning</b></td><td><b>ig-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/covid-19</b></td><td><b>error</b></td><td><b>URL Mismatch https://interopen.github.io/covid-19/ImplementationGuide/interopen.covid19 vs https://interopen.github.io/covid-19/ImplementationGuide/covid-19</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_conceptmap_readv2-snomed-covid19"> </a>
+<h2><a href="ConceptMap-readv2-snomed-covid19.html">/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ConceptMap/readv2-snomed-covid19.xml</a></h2>
+ <table class="grid">
+   <tr>
+     <td><b>Path</b></td><td><b>Severity</b></td><td><b>Message</b></td>
+   </tr>
+   <tr style="background-color: #ffebcc">
+     <td><b>ConceptMap/readv2-snomed-covid19: ConceptMap</b></td><td><b>warning</b></td><td><b>cmd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_covid-19-red-flags"> </a>
+<h2><a href="ValueSet-covid-19-red-flags.html">/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/covid-19-red-flags.xml</a></h2>
+ <table class="grid">
+   <tr>
+     <td><b>Path</b></td><td><b>Severity</b></td><td><b>Message</b></td>
+   </tr>
+   <tr style="background-color: #ffebcc">
+     <td><b>ValueSet/covid-19-red-flags: ValueSet</b></td><td><b>warning</b></td><td><b>vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_emis-covid-19"> </a>
+<h2><a href="ValueSet-emis-covid-19.html">/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/emis-covid-19.xml</a></h2>
+ <table class="grid">
+   <tr>
+     <td><b>Path</b></td><td><b>Severity</b></td><td><b>Message</b></td>
+   </tr>
+   <tr style="background-color: #ffebcc">
+     <td><b>ValueSet/emis-covid-19: ValueSet</b></td><td><b>warning</b></td><td><b>vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>emis-covid-19</b></td><td><b>error</b></td><td><b>Error from server: Unable to provide support for code system http://read.info/readv2</b></td>
+   </tr>
+</table>
+<hr/>
+<a name="_Users_kevinmayfield_Development_wildfyre_covid-19_input_resources_valueset_snomed-covid-19"> </a>
+<h2><a href="ValueSet-snomed-covid-19.html">/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/snomed-covid-19.xml</a></h2>
+ <table class="grid">
+   <tr>
+     <td><b>Path</b></td><td><b>Severity</b></td><td><b>Message</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>https://interopen.github.io/covid-19/ValueSet/snomed-covid-id</b></td><td><b>error</b></td><td><b>Conformance resource /Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/ValueSet/snomed-covid-19.xml - the canonical URL (https://interopen.github.io/covid-19/ValueSet/snomed-covid-19) does not match the URL (https://interopen.github.io/covid-19/ValueSet/snomed-covid-id)</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>ValueSet.url</b></td><td><b>error</b></td><td><b>Resource id/url mismatch: snomed-covid-19/https://interopen.github.io/covid-19/ValueSet/snomed-covid-id</b></td>
+   </tr>
+   <tr style="background-color: #ffebcc">
+     <td><b>ValueSet/snomed-covid-19: ValueSet</b></td><td><b>warning</b></td><td><b>vsd-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]</b></td>
+   </tr>
+   <tr style="background-color: #ffcccc">
+     <td><b>/Users/kevinmayfield/Development/wildfyre/covid-19/input/resources/valueset/snomed-covid-19</b></td><td><b>error</b></td><td><b>URL Mismatch https://interopen.github.io/covid-19/ValueSet/snomed-covid-19 vs https://interopen.github.io/covid-19/ValueSet/snomed-covid-id</b></td>
+   </tr>
+</table>
+<a name="suppressed"> </a>
+<p><b>Suppressed Error Messages</b></p><ul>
+ <li>// Add warning and/or information messages here after you've confirmed that they aren't really a problem</li>
+ <li>// (And include comments like this justifying why)</li>
+ <li>// This is inherited from the base resource</li>
+ <li>WARNING: StructureDefinition/myObservation: StructureDefinition.snapshot.element[15].mapping[3].map: value should not start or finish with whitespace</li>
+ <li>// We're expecting these to not match the slice - we're showing how you can use slicing to define the one repetition you want even when many repetitions might be present</li>
+ <li>INFORMATION: Patient/example: Patient.name[0]: This element does not match any known slice for the profile http://somewhere.org/fhir/uv/myig/StructureDefinition/mypatient</li>
+ <li>INFORMATION: Patient/example: Patient.name[1]: This element does not match any known slice for the profile http://somewhere.org/fhir/uv/myig/StructureDefinition/mypatient</li>
+ <li>// If this was a real IG, there should be examples for these profiles too.  But it's not, and I'm lazy...</li>
+ <li>WARNING: http://somewhere.org/fhir/uv/myig/StructureDefinition/myObservation: The Implementation Guide contains no examples for this profile</li>
+ <li>WARNING: http://somewhere.org/fhir/uv/myig/StructureDefinition/mypractitioner: The Implementation Guide contains no examples for this profile</li>
+</ul>
+</body>
+</html>

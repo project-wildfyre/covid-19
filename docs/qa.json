@@ -1,0 +1,12 @@
+{
+  "url": "https://interopen.github.io/covid-19/ImplementationGuide/covid-19",
+  "name": "UK COVID-19 Support",
+  "package-id": "covid19.r4",
+  "ig-ver": "0.2.0",
+  "date": "Fri, 27 Mar, 2020 06:53:40 +0000",
+  "errs": 14,
+  "warnings": 10,
+  "hints": 0,
+  "version": "4.0.1",
+  "tool": "4.2.0 (3)"
+}

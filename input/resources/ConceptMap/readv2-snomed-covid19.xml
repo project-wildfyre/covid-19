@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+    <id value="readv2-snomed-covid19"/>
+
+    <url value="https://interopen.github.io/covid-19/ConceptMap/readv2-snomed-covid19"/>
+    <version value="4.0.1"/>
+    <name value="EMIS ReadV2 to SNOMED CT mappings for COVID 19"/>
+    <status value="draft"/>
+    <experimental value="true"/>
+    <date value="2020-03-27"/>
+    <publisher value="INTEROPen and HL7 UK"/>
+    <contact>
+        <name value="INTEROPen"></name>
+        <telecom>
+            <!-- Or whatever URL and/or email address(es) are appropriate -->
+            <system value="other"></system>
+            <value value="https://interopen.ryver.com/"></value>
+        </telecom>
+    </contact>
+    <description value="Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna"/>
+    <jurisdiction>
+        <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"></system>
+            <code value="826"></code>
+        </coding>
+    </jurisdiction>
+    <purpose value="Mapping from EMIS Read V2 to SNOMED"/>
+    <copyright value="Creative Commons 0"/>
+    <group>
+        <source value="http://read.info/readv2"/>
+        <target value="http://snomed.info/sct"/>
+        <element>
+            <code value="EMISNQSU106"/>
+            <target>
+                <code value="840544004"/>
+                <equivalence value="equal"/>
+            </target>
+        </element>
+        <element>
+            <code value="EMISNQEX58"/>
+            <target>
+                <code value="840546002"/>
+                <equivalence value="equal"/>
+            </target>
+        </element>
+    </group>
+</ConceptMap>

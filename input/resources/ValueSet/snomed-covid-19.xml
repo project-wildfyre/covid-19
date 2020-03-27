@@ -1,0 +1,37 @@
+<ValueSet xmlns="http://hl7.org/fhir">
+   <id value="snomed-covid-19"></id>
+   <url value="https://interopen.github.io/covid-19/ValueSet/snomed-covid-id"></url>
+   <version value="1.0.0"></version>
+   <name value="COVID-19 SNOMED Codes"></name>
+   <title value="COVID-19 SNOMED Codes"></title>
+   <status value="draft"></status>
+   <date value="2019-11-04T00:00:00+00:00"></date>
+   <publisher value="INTEROPen"></publisher>
+   <contact>
+      <name value="INTEROPen"></name>
+      <telecom>
+         <!-- Or whatever URL and/or email address(es) are appropriate -->
+         <system value="other"></system>
+         <value value="https://interopen.ryver.com/"></value>
+      </telecom>
+   </contact>
+   <description value="Sample of SNOMED CT Codes. For more details see http://www.snomed.org/news-and-events/articles/march-2020-interim-snomedct-release-COVID-19"></description>
+   <copyright value="This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."></copyright>
+   <compose>
+      <include>
+         <system value="http://snomed.info/sct"></system>
+         <concept>
+            <code value="840546002"/>
+            <display value="Exposure to severe acute respiratory syndrome coronavirus 2 (event)"/>
+         </concept>
+         <concept>
+            <code value="840544004"/>
+            <display value="Suspected disease caused by severe acute respiratory coronavirus 2 (situation)"/>
+         </concept>
+         <concept>
+            <code value="840533007"/>
+            <display value="Severe acute respiratory syndrome coronavirus 2 (organism)"/>
+         </concept>
+      </include>
+   </compose>
+</ValueSet>

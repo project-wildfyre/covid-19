@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="c788441a-5fc7-4961-82bf-c053abe5a494"/>
+  <meta>
+    <lastUpdated value="2020-03-27T06:53:40.327+00:00"/>
+  </meta>
+  <type value="collection"/>
+  <entry>
+    <resource>
+      <ValueSet>
+        <text>
+          <status value="generated"/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>This value set contains 1 concepts</p>
+            <p style="border: black 1px dotted; background-color: #EEEEEE; padding: 8px">Expansion based on SNOMED CT International edition 09-Mar 2020</p>
+            <p>All codes from system 
+              <a href="http://hl7.org/fhir/R4/codesystem-snomedct.html">
+                <code>http://snomed.info/sct</code>
+              </a>
+            </p>
+            <table class="codes">
+              <tr>
+                <td style="white-space:nowrap">
+                  <b>Code</b>
+                </td>
+                <td>
+                  <b>Display</b>
+                </td>
+                <td>
+                  <b>Definition</b>
+                </td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap">
+                  <a name="http---snomed.info-sct-161941007"> </a>
+                  <a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=161941007">161941007</a>
+                </td>
+                <td>Shortness of breath at rest</td>
+                <td/>
+              </tr>
+            </table>
+          </div>
+        </text>
+        <status value="active"/>
+        <expansion>
+          <identifier value="urn:uuid:73fd204f-2ed7-4031-ab19-c91a161266b9"/>
+          <timestamp value="2020-03-27T06:00:58.016Z"/>
+          <parameter>
+            <name value="limitedExpansion"/>
+            <valueBoolean value="true"/>
+          </parameter>
+          <parameter>
+            <name value="version"/>
+            <valueString value="http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20200309"/>
+          </parameter>
+          <contains>
+            <system value="http://snomed.info/sct"/>
+            <code value="161941007"/>
+            <display value="Shortness of breath at rest"/>
+          </contains>
+        </expansion>
+      </ValueSet>
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+      <ValueSet>
+        <text>
+          <status value="generated"/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>This value set contains 3 concepts</p>
+            <p style="border: black 1px dotted; background-color: #EEEEEE; padding: 8px">Expansion based on SNOMED CT International edition 09-Mar 2020</p>
+            <p>All codes from system 
+              <a href="http://hl7.org/fhir/R4/codesystem-snomedct.html">
+                <code>http://snomed.info/sct</code>
+              </a>
+            </p>
+            <table class="codes">
+              <tr>
+                <td style="white-space:nowrap">
+                  <b>Code</b>
+                </td>
+                <td>
+                  <b>Display</b>
+                </td>
+                <td>
+                  <b>Definition</b>
+                </td>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap">
+                  <a name="http---snomed.info-sct-840546002"> </a>
+                  <a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840546002">840546002</a>
+                </td>
+                <td>Exposure to severe acute respiratory syndrome coronavirus 2 (event)</td>
+                <td/>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap">
+                  <a name="http---snomed.info-sct-840544004"> </a>
+                  <a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840544004">840544004</a>
+                </td>
+                <td>Suspected disease caused by severe acute respiratory coronavirus 2 (situation)</td>
+                <td/>
+              </tr>
+              <tr>
+                <td style="white-space:nowrap">
+                  <a name="http---snomed.info-sct-840533007"> </a>
+                  <a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840533007">840533007</a>
+                </td>
+                <td>Severe acute respiratory syndrome coronavirus 2 (organism)</td>
+                <td/>
+              </tr>
+            </table>
+          </div>
+        </text>
+        <status value="active"/>
+        <expansion>
+          <identifier value="urn:uuid:e49fa184-39dc-4056-8aaf-1ede775af1be"/>
+          <timestamp value="2020-03-27T06:26:21.035Z"/>
+          <parameter>
+            <name value="limitedExpansion"/>
+            <valueBoolean value="true"/>
+          </parameter>
+          <parameter>
+            <name value="version"/>
+            <valueString value="http://snomed.info/sct|http://snomed.info/sct/900000000000207008/version/20200309"/>
+          </parameter>
+          <contains>
+            <system value="http://snomed.info/sct"/>
+            <code value="840546002"/>
+            <display value="Exposure to severe acute respiratory syndrome coronavirus 2 (event)"/>
+          </contains>
+          <contains>
+            <system value="http://snomed.info/sct"/>
+            <code value="840544004"/>
+            <display value="Suspected disease caused by severe acute respiratory coronavirus 2 (situation)"/>
+          </contains>
+          <contains>
+            <system value="http://snomed.info/sct"/>
+            <code value="840533007"/>
+            <display value="Severe acute respiratory syndrome coronavirus 2 (organism)"/>
+          </contains>
+        </expansion>
+      </ValueSet>
+    </resource>
+  </entry>
+</Bundle>

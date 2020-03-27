@@ -1,0 +1,93 @@
+-------------------------------------------------------------------------------------
+{"hierarchical" : false, "valueSet" :{
+  "resourceType" : "ValueSet",
+  "compose" : {
+    "include" : [{
+      "system" : "http://read.info/readv2",
+      "concept" : [{
+        "code" : "EMISNQSU106",
+        "display" : "Suspected 2019-nCoV (Wuhan) infection"
+      }]
+    }]
+  }
+}}####
+e: {
+  "error" : "Error from server: Unable to provide support for code system http://read.info/readv2"
+}
+-------------------------------------------------------------------------------------
+{"hierarchical" : true, "valueSet" :{
+  "resourceType" : "ValueSet",
+  "compose" : {
+    "include" : [{
+      "system" : "http://read.info/readv2",
+      "concept" : [{
+        "code" : "EMISNQSU106",
+        "display" : "Suspected 2019-nCoV (Wuhan) infection"
+      }]
+    }]
+  }
+}}####
+e: {
+  "error" : "Error from server: Unable to provide support for code system http://read.info/readv2"
+}
+-------------------------------------------------------------------------------------
+{"code" : {
+  "system" : "http://read.info/readv2",
+  "code" : "EMISNQSU106"
+}, "valueSet" :null, "lang":"null", "useServer":"true", "useClient":"true", "guessSystem":"false", "valueSetMode":"ALL_CHECKS"}####
+v: {
+  "display" : "",
+  "severity" : "error",
+  "error" : "The code system \"http://read.info/readv2\" is not known (encountered paired with code = \"EMISNQSU106\"); The code provided (http://read.info/readv2#EMISNQSU106) is not  valid in the value set All codes known to the system"
+}
+-------------------------------------------------------------------------------------
+{"hierarchical" : false, "valueSet" :{
+  "resourceType" : "ValueSet",
+  "compose" : {
+    "include" : [{
+      "system" : "http://read.info/readv2",
+      "concept" : [{
+        "code" : "EMISNQSU106",
+        "display" : "Suspected 2019-nCoV (Wuhan) infection"
+      },
+      {
+        "code" : "EMISNQEX58",
+        "display" : "Exposure to 2019-nCoV (Wuhan) infection"
+      }]
+    }]
+  }
+}}####
+e: {
+  "error" : "Error from server: Unable to provide support for code system http://read.info/readv2"
+}
+-------------------------------------------------------------------------------------
+{"code" : {
+  "system" : "http://read.info/readv2",
+  "code" : "EMISNQEX58"
+}, "valueSet" :null, "lang":"null", "useServer":"true", "useClient":"true", "guessSystem":"false", "valueSetMode":"ALL_CHECKS"}####
+v: {
+  "display" : "",
+  "severity" : "error",
+  "error" : "The code system \"http://read.info/readv2\" is not known (encountered paired with code = \"EMISNQEX58\"); The code provided (http://read.info/readv2#EMISNQEX58) is not  valid in the value set All codes known to the system"
+}
+-------------------------------------------------------------------------------------
+{"hierarchical" : true, "valueSet" :{
+  "resourceType" : "ValueSet",
+  "compose" : {
+    "include" : [{
+      "system" : "http://read.info/readv2",
+      "concept" : [{
+        "code" : "EMISNQSU106",
+        "display" : "Suspected 2019-nCoV (Wuhan) infection"
+      },
+      {
+        "code" : "EMISNQEX58",
+        "display" : "Exposure to 2019-nCoV (Wuhan) infection"
+      }]
+    }]
+  }
+}}####
+e: {
+  "error" : "Error from server: Unable to provide support for code system http://read.info/readv2"
+}
+-------------------------------------------------------------------------------------

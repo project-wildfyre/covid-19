@@ -1,0 +1,70 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://interopen.github.io/covid-19/ConceptMap/readv2-snomed-covid19> a fhir:ConceptMap;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "readv2-snomed-covid19"];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ];
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>EMIS ReadV2 to SNOMED CT mappings for COVID 19 (https://interopen.github.io/covid-19/ConceptMap/readv2-snomed-covid19)</h2><p>Mapping from (not specified) to (not specified)</p><p>DRAFT (not intended for production usage). Published on 27 Mar 2020, 00:00:00 by HL7 UK and INTEROPen (). Creative Commons 0</p><div><p>Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna</p>\n</div><br/><table class=\"grid\"><tr><td><b>Source Code</b></td><td><b>Relationship</b></td><td><b>Destination Code</b></td></tr><tr><td>EMISNQSU106</td><td><a href=\"http://hl7.org/fhir/R4/codesystem-concept-map-equivalence.html#equal\">is equal to</a></td><td>840544004 (Suspected disease caused by 2019 novel coronavirus)</td></tr><tr><td>EMISNQEX58</td><td><a href=\"http://hl7.org/fhir/R4/codesystem-concept-map-equivalence.html#equal\">is equal to</a></td><td>840546002 (Exposure to 2019 novel coronavirus)</td></tr></table></div>"
+  ];
+  fhir:ConceptMap.url [ fhir:value "https://interopen.github.io/covid-19/ConceptMap/readv2-snomed-covid19"];
+  fhir:ConceptMap.version [ fhir:value "0.2.0"];
+  fhir:ConceptMap.name [ fhir:value "EMIS ReadV2 to SNOMED CT mappings for COVID 19"];
+  fhir:ConceptMap.status [ fhir:value "draft"];
+  fhir:ConceptMap.experimental [ fhir:value "true"^^xsd:boolean];
+  fhir:ConceptMap.date [ fhir:value "2020-03-27T00:00:00+00:00"^^xsd:dateTime];
+  fhir:ConceptMap.publisher [ fhir:value "HL7 UK and INTEROPen"];
+  fhir:ConceptMap.contact [
+     fhir:index 0;
+     fhir:ContactDetail.telecom [
+       fhir:index 0;
+       fhir:ContactPoint.system [ fhir:value "other" ];
+       fhir:ContactPoint.value [ fhir:value "https://interopen.ryver.com/" ]
+     ]
+  ];
+  fhir:ConceptMap.description [ fhir:value "Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna"];
+  fhir:ConceptMap.jurisdiction [
+     fhir:index 0;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://unstats.un.org/unsd/methods/m49/m49.htm" ];
+       fhir:Coding.code [ fhir:value "826" ]
+     ]
+  ];
+  fhir:ConceptMap.purpose [ fhir:value "Mapping from EMIS Read V2 to SNOMED"];
+  fhir:ConceptMap.copyright [ fhir:value "Creative Commons 0"];
+  fhir:ConceptMap.group [
+     fhir:index 0;
+     fhir:ConceptMap.group.source [ fhir:value "http://read.info/readv2" ];
+     fhir:ConceptMap.group.target [ fhir:value "http://snomed.info/sct" ];
+     fhir:ConceptMap.group.element [
+       fhir:index 0;
+       fhir:ConceptMap.group.element.code [ fhir:value "EMISNQSU106" ];
+       fhir:ConceptMap.group.element.target [
+         fhir:index 0;
+         fhir:ConceptMap.group.element.target.code [ fhir:value "840544004" ];
+         fhir:ConceptMap.group.element.target.equivalence [ fhir:value "equal" ]
+       ]
+     ], [
+       fhir:index 1;
+       fhir:ConceptMap.group.element.code [ fhir:value "EMISNQEX58" ];
+       fhir:ConceptMap.group.element.target [
+         fhir:index 0;
+         fhir:ConceptMap.group.element.target.code [ fhir:value "840546002" ];
+         fhir:ConceptMap.group.element.target.equivalence [ fhir:value "equal" ]
+       ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://interopen.github.io/covid-19/ConceptMap/readv2-snomed-covid19.ttl> a owl:Ontology;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValueSet xmlns="http://hl7.org/fhir">
+  <id value="snomed-covid-19"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><h2>COVID-19 SNOMED Codes</h2><div><p>Sample of SNOMED CT Codes. For more details see http://www.snomed.org/news-and-events/articles/march-2020-interim-snomedct-release-COVID-19</p>
+</div><p><b>Copyright Statement:</b></p><div><p>This value set includes content from SNOMED CT, which is copyright © 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement.</p>
+</div><ul><li>Include these codes as defined in <a href="http://www.snomed.org/"><code>http://snomed.info/sct</code></a><table class="none"><tr><td style="white-space:nowrap"><b>Code</b></td><td><b>Display</b></td></tr><tr><td><a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840546002">840546002</a></td><td>Exposure to severe acute respiratory syndrome coronavirus 2 (event)</td><td/></tr><tr><td><a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840544004">840544004</a></td><td>Suspected disease caused by severe acute respiratory coronavirus 2 (situation)</td><td/></tr><tr><td><a href="http://browser.ihtsdotools.org/?perspective=full&amp;conceptId1=840533007">840533007</a></td><td>Severe acute respiratory syndrome coronavirus 2 (organism)</td><td/></tr></table></li></ul></div>
+  </text>
+  <url value="https://interopen.github.io/covid-19/ValueSet/snomed-covid-id"/>
+  <version value="0.2.0"/>
+  <name value="COVID-19 SNOMED Codes"/>
+  <title value="COVID-19 SNOMED Codes"/>
+  <status value="draft"/>
+  <date value="2019-11-04T00:00:00+00:00"/>
+  <publisher value="HL7 UK and INTEROPen"/>
+  <contact>
+    <telecom>
+      <system value="other"/>
+      <value value="https://interopen.ryver.com/"/>
+    </telecom>
+  </contact>
+  <description value="Sample of SNOMED CT Codes. For more details see http://www.snomed.org/news-and-events/articles/march-2020-interim-snomedct-release-COVID-19"/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="826"/>
+    </coding>
+  </jurisdiction>
+  <copyright value="This value set includes content from SNOMED CT, which is copyright &#xA9; 2002+ International Health Terminology Standards Development Organisation (IHTSDO), and distributed by agreement between IHTSDO and HL7. Implementer use of SNOMED CT is not covered by this agreement."/>
+  <compose>
+    <include>
+      <system value="http://snomed.info/sct"/>
+      <concept>
+        <code value="840546002"/>
+        <display value="Exposure to severe acute respiratory syndrome coronavirus 2 (event)"/>
+      </concept>
+      <concept>
+        <code value="840544004"/>
+        <display value="Suspected disease caused by severe acute respiratory coronavirus 2 (situation)"/>
+      </concept>
+      <concept>
+        <code value="840533007"/>
+        <display value="Severe acute respiratory syndrome coronavirus 2 (organism)"/>
+      </concept>
+    </include>
+  </compose>
+</ValueSet>
