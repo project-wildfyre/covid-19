@@ -73,13 +73,13 @@ public class UKCovidExtractApp implements CommandLineRunner {
         Date in = new Date();
         LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
         // Set to date before
-        ldt = ldt.minusDays(1);
+      //  ldt = ldt.minusDays(1);
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         // Population
         log.info("Processing Locations");
         ProcessLocationsFile();
         // Locations
-        LoadYesterdays();
+       // LoadYesterdays();
         // Process Daily UA File
         reports = new ArrayList<>();
         ProcessDailyUAFile(today);
