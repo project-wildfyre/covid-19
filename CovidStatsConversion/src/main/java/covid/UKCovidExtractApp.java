@@ -12,14 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URL;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -73,11 +68,13 @@ public class UKCovidExtractApp implements CommandLineRunner {
         Date in = new Date();
         LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
         // Set to date before
-      //  ldt = ldt.minusDays(1);
+        ldt = ldt.minusDays(1);
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         // Population
         log.info("Processing Locations");
-        ProcessLocationsFile();
+        ProcessLocationsFile("UK.csv");
+        ProcessLocationsFile("EnglandRegions.csv");
+        ProcessLocationsFile("LocalAuthority.csv");
         // Locations
        // LoadYesterdays();
         // Process Daily UA File
@@ -136,9 +133,9 @@ public class UKCovidExtractApp implements CommandLineRunner {
         }
     }
 
-    private void ProcessLocationsFile() throws Exception {
+    private void ProcessLocationsFile(String fileName) throws Exception {
 
-        InputStream zis = classLoader.getResourceAsStream("LocalAuthority.csv");
+        InputStream zis = classLoader.getResourceAsStream(fileName);
 
         LAHandler laHandler = new LAHandler();
         Process(zis, laHandler);
@@ -348,10 +345,17 @@ public class UKCovidExtractApp implements CommandLineRunner {
            Location location = new Location();
             location.addIdentifier().setSystem(ONSSystem).setValue(theRecord[0]);
             location.setName(theRecord[1]);
+            Location parent = locations.get(theRecord[2]);
+            if (parent != null) {
+                location.getPartOf()
+                        .setReference(parent.getId());
+            }
+
             location.getPartOf()
                     .setDisplay(theRecord[3])
                     .getIdentifier()
                     .setSystem(ONSSystem).setValue(theRecord[2]);
+
             Extension extension = location.addExtension();
             extension.setUrl("https://fhir.mayfield-is.co.uk/Population");
             extension.setValue(new IntegerType().setValue(Integer.parseInt(theRecord[4])));
