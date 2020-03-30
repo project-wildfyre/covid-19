@@ -58,7 +58,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     Date today = null;
 
-    IGenericClient client = ctxFHIR.newRestfulGenericClient("http://fhirserver-env-1.eba-aepmzc4d.eu-west-2.elasticbeanstalk.com:8186/R4");
+    IGenericClient client = ctxFHIR.newRestfulGenericClient("http://fhir.test.xgenome.co.uk/R4");
   //IGenericClient client = ctxFHIR.newRestfulGenericClient("http://localhost:8186/R4");
 
 
