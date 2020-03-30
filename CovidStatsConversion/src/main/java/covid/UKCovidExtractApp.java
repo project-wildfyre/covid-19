@@ -40,7 +40,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     private Map<String,Location> locations = new HashMap<>();
 
-    private Map<String,MeasureReport> pastMeasures = new HashMap<>();
+  //  private Map<String,MeasureReport> pastMeasures = new HashMap<>();
 
     ClassLoader classLoader = getClass().getClassLoader();
 
@@ -52,12 +52,14 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     DateFormat dateStamp = new SimpleDateFormat("yyyy-MM-dd");
 
+    DateFormat hisFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     DateFormat stamp = new SimpleDateFormat("yyyyMMdd");
 
     Date today = null;
 
-  //  IGenericClient client = ctxFHIR.newRestfulGenericClient("http://fhirserver-env-1.eba-aepmzc4d.eu-west-2.elasticbeanstalk.com:8186/R4");
-  IGenericClient client = ctxFHIR.newRestfulGenericClient("http://localhost:8186/R4");
+    IGenericClient client = ctxFHIR.newRestfulGenericClient("http://fhirserver-env-1.eba-aepmzc4d.eu-west-2.elasticbeanstalk.com:8186/R4");
+  //IGenericClient client = ctxFHIR.newRestfulGenericClient("http://localhost:8186/R4");
 
 
     @Override
@@ -68,68 +70,187 @@ public class UKCovidExtractApp implements CommandLineRunner {
         Date in = new Date();
         LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
         // Set to date before
-        ldt = ldt.minusDays(1);
+       // ldt = ldt.minusDays(1);
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+
         // Population
+        // Locations
+
         log.info("Processing Locations");
         ProcessLocationsFile("UK.csv");
         ProcessLocationsFile("EnglandRegions.csv");
         ProcessLocationsFile("LocalAuthority.csv");
-        // Locations
-       // LoadYesterdays();
+/*
+        Disable for now, can use to correct past results.
+        ProcessHistoric();
+  */
+
         // Process Daily UA File
         reports = new ArrayList<>();
         ProcessDailyUAFile(today);
+        CalculateRegions(dateStamp.format(today));
 
-    }
-
-    private void LoadYesterdays()  {
-        Bundle bundle = null;
-        Date indate = new Date();
-        LocalDateTime ldt = LocalDateTime.ofInstant(indate.toInstant(), ZoneId.systemDefault());
-        // Set to date before
-        ldt = ldt.minusDays(2);
-        Date reportDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-
-        int count = 0;
-        int fileCnt=0;
-        for (Location location : locations.values() ) {
-
-            if ((count % batchSize) == 0 ) {
-
-                if (bundle != null) ProcessYesterday(bundle);
-                bundle = new Bundle();
-                bundle.getIdentifier().setSystem("https://fhir.mayfield-is.co.uk/Id/")
-                        .setValue(UUID.randomUUID().toString());
-
-                bundle.setType(Bundle.BundleType.TRANSACTION);
-                fileCnt++;
-            }
-            Bundle.BundleEntryComponent entry = bundle.addEntry()
-                    .setFullUrl(UUID_Prefix + UUID.randomUUID().toString());
-            String conditionalUrl = "identifier=https://www.arcgis.com/fhir/CountyUAs_cases|" +  location.getIdentifierFirstRep().getValue() + "-" +stamp.format(reportDate);
-            entry.getRequest()
-                    .setMethod(Bundle.HTTPVerb.GET)
-                    .setUrl("MeasureReport?" + conditionalUrl);
-            count++;
-        }
-        if (bundle != null && bundle.getEntry().size() > 0) {
-            ProcessYesterday(bundle);
-        }
 
 
     }
 
-    private void ProcessYesterday(Bundle bundle) {
-        log.info("Processing Yesterdays data");
-        Bundle resp = client.transaction().withBundle(bundle).execute();
-        for (Bundle.BundleEntryComponent entry : resp.getEntry()) {
-            if (entry.hasResource()) {
-                for (Bundle.BundleEntryComponent result : ((Bundle) entry.getResource()).getEntry()) {
-                    MeasureReport report = (MeasureReport) result.getResource();
-                    pastMeasures.put(report.getReporter().getReference(),report);
+    private void ProcessHistoric() {
+        InputStream zis = classLoader.getResourceAsStream("Historic.csv");
+
+        try {
+            Reader reader = new InputStreamReader(zis, Charsets.UTF_8);
+
+            CSVIterator iterator = new CSVIterator(new CSVReader(reader, ',', '\"', 0));
+            String[] header = null;
+            int count = 0;
+            for (CSVIterator it = iterator; it.hasNext(); ) {
+
+                if (count==0) {
+                    header=it.next();
+                } else  {
+                    String[] nextLine = it.next();
+                    Bundle bundle = new Bundle();
+                    bundle.getIdentifier().setSystem("https://fhir.mayfield-is.co.uk/Id/")
+                            .setValue(UUID.randomUUID().toString());
+                    bundle.setType(Bundle.BundleType.TRANSACTION);
+                    for (int i = 2; i < nextLine.length; i++) {
+                        log.info("{} {} count {}", nextLine[0], header[i], nextLine[i]);
+                        MeasureReport report = getMeasureReport(hisFormat.parse(header[i]) ,Integer.parseInt(nextLine[i].trim()),nextLine[0]);
+                        if (report != null) {
+
+                            Bundle.BundleEntryComponent entry = bundle.addEntry()
+                                    .setFullUrl(UUID_Prefix + UUID.randomUUID().toString())
+                                    .setResource(report);
+                            String conditionalUrl = getConditional(report.getIdentifierFirstRep());
+                            entry.getRequest()
+                                    .setMethod(Bundle.HTTPVerb.PUT)
+                                    .setUrl(entry.getResource().getClass().getSimpleName() + "?" + conditionalUrl);
+                        }
+                    }
+                   // log.info(ctxFHIR.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
+                    Bundle resp = client.transaction().withBundle(bundle).execute();
                 }
+                count++;
             }
+            for (int i = 2; i < header.length; i++) {
+                CalculateRegions(dateStamp.format(hisFormat.parse(header[i])));
+            }
+
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
+    }
+
+    private void  CalculateRegions(String date) {
+        InputStream zis = classLoader.getResourceAsStream("EnglandRegions.csv");
+
+        Bundle bundle = new Bundle();
+        bundle.getIdentifier().setSystem("https://fhir.mayfield-is.co.uk/Id/")
+                .setValue(UUID.randomUUID().toString());
+        bundle.setType(Bundle.BundleType.TRANSACTION);
+
+
+        try {
+            Reader reader = new InputStreamReader(zis, Charsets.UTF_8);
+
+            CSVIterator iterator = new CSVIterator(new CSVReader(reader,',', '\"', 1));
+
+            for (CSVIterator it = iterator; it.hasNext(); ) {
+                String[] nextLine = it.next();
+
+                Bundle results = client.search().byUrl("MeasureReport?reporter.partof.identifier="+nextLine[0]+"&date=ge"+date+"T00:00&date=le"+date+"T23:59&_count=50").returnBundle(Bundle.class).execute();
+                //log.info(ctxFHIR.newXmlParser().setPrettyPrint(true).encodeResourceToString(results));
+                int cases =0;
+                for(Bundle.BundleEntryComponent entryComponent : results.getEntry()) {
+                    if (entryComponent.getResource() instanceof MeasureReport) {
+                        cases +=  ((MeasureReport) entryComponent.getResource()).getGroupFirstRep().getMeasureScore().getValue().intValue();
+                    }
+                }
+                log.info("{} Cases Count = {}",nextLine[0], cases);
+
+                Date reportDate = null;
+                try {
+                    reportDate = dateStamp.parse(date);
+                } catch (Exception ex) {
+                    log.error(ex.getMessage());
+                }
+                MeasureReport report = getMeasureReport(reportDate,cases,nextLine[0]);
+
+                if (report != null) {
+
+                    Bundle.BundleEntryComponent entry = bundle.addEntry()
+                            .setFullUrl(UUID_Prefix + UUID.randomUUID().toString())
+                            .setResource(report);
+                    String conditionalUrl = getConditional(report.getIdentifierFirstRep());
+                    entry.getRequest()
+                            .setMethod(Bundle.HTTPVerb.PUT)
+                            .setUrl(entry.getResource().getClass().getSimpleName() + "?" + conditionalUrl);
+
+                }
+
+
+            }
+            log.info(ctxFHIR.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
+            Bundle resp = client.transaction().withBundle(bundle).execute();
+        } catch (IOException e) {
+            throw new InternalErrorException(e);
+        }
+    }
+
+    private MeasureReport getMeasureReport(Date reportDate, int cases, String locationId) {
+        MeasureReport report = new MeasureReport();
+
+        Location location = locations.get(locationId);
+
+
+        if (location != null) {
+            int population = ((IntegerType) location.getExtensionByUrl("https://fhir.mayfield-is.co.uk/Population").getValue()).getValue();
+            report.addIdentifier()
+                    .setSystem("https://www.arcgis.com/fhir/CountyUAs_cases")
+                    .setValue(locationId + "-" + stamp.format(reportDate));
+
+            report.setDate(reportDate);
+            report.setPeriod(new Period().setStart(reportDate));
+            report.setStatus(MeasureReport.MeasureReportStatus.COMPLETE);
+            report.setType(MeasureReport.MeasureReportType.SUMMARY);
+            report.setReporter(new Reference().setDisplay(location.getName()).setReference(location.getId()));
+            report.setMeasure("https://www.arcgis.com/fhir/Measure/CountyUAs_cases");
+            Quantity qty = new Quantity();
+            qty.setValue(new BigDecimal(cases));
+
+            MeasureReport.MeasureReportGroupComponent group = report.addGroup();
+            group.setCode(
+                    new CodeableConcept().addCoding(
+                            new Coding().setSystem("http://snomed.info/sct")
+                                    .setCode("840539006")
+                                    .setDisplay("Disease caused by severe acute respiratory syndrome coronavirus 2 (disorder)")
+                    )
+            )
+                    .addPopulation().setCount(population);
+            group.setMeasureScore(qty);
+
+            group = report.addGroup();
+            group.setCode(
+                    new CodeableConcept().addCoding(
+                            new Coding().setSystem("http://fhir.mayfield-is.co.uk")
+                                    .setCode("CASES/MILLION")
+                                    .setDisplay("COVID-19 Cases Per million")
+                    )
+            )
+                    .addPopulation().setCount(1000000);
+            Quantity qtyadj = new Quantity();
+            Double num = (qty.getValue().doubleValue() / population) * 1000000;
+            qtyadj.setValue(num);
+            group.setMeasureScore(qtyadj);
+
+            report.getSubject()
+                    .setDisplay(location.getName())
+                    .setReference(location.getId());
+            return report;
+        } else {
+            log.error("Missing Location Id");
+            return null;
         }
     }
 
@@ -290,8 +411,6 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     private void processMeasures(Bundle bundle, int fileCount) throws Exception {
         log.info("Processing Cases "+ fileCount);
-       // Path path = Paths.get("Cases"+fileCount+".json");
-      //  Files.write(path,ctxFHIR.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle).getBytes() );
 
         Bundle resp = client.transaction().withBundle(bundle).execute();
 
@@ -419,39 +538,6 @@ public class UKCovidExtractApp implements CommandLineRunner {
                 qtyadj.setValue(num);
                 group.setMeasureScore(qtyadj);
 
-               log.info("Base "+location.getIdBase());
-                log.info("IdPart "+location.getIdElement().getIdPart());
-                MeasureReport last = pastMeasures.get("Location/"+location.getIdElement().getIdPart());
-                if (last != null) {
-                    group = report.addGroup();
-                    group.setCode(
-                            new CodeableConcept().addCoding(
-                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
-                                            .setCode("NEWCASES")
-                                            .setDisplay("COVID-19 NEW CASES")
-                            )
-                    )
-                            .addPopulation().setCount(population);
-                    Quantity newCases = new Quantity();
-                    newCases.setValue(qty.getValue().subtract(last.getGroupFirstRep().getMeasureScore().getValue()));
-                    group.setMeasureScore(newCases);
-
-                    group = report.addGroup();
-                    group.setCode(
-                            new CodeableConcept().addCoding(
-                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
-                                            .setCode("NEWCASES/MILLION")
-                                            .setDisplay("COVID-19 New Cases Per million")
-                            )
-                    )
-                            .addPopulation().setCount(1000000);
-                    Quantity newadj = new Quantity();
-                    Double numadj = (newCases.getValue().doubleValue() / population) * 1000000;
-                    newadj.setValue(numadj);
-                    group.setMeasureScore(newadj);
-
-                }
-
                 report.getSubject()
                         .setDisplay(theRecord[1])
                         .setReference(location.getId());
@@ -464,6 +550,61 @@ public class UKCovidExtractApp implements CommandLineRunner {
         }
 
     }
+
+
+       /*
+    private void LoadYesterdays()  {
+        Bundle bundle = null;
+        Date indate = new Date();
+        LocalDateTime ldt = LocalDateTime.ofInstant(indate.toInstant(), ZoneId.systemDefault());
+        // Set to date before
+        ldt = ldt.minusDays(2);
+        Date reportDate = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+
+        int count = 0;
+        int fileCnt=0;
+        for (Location location : locations.values() ) {
+
+            if ((count % batchSize) == 0 ) {
+
+                if (bundle != null) ProcessYesterday(bundle);
+                bundle = new Bundle();
+                bundle.getIdentifier().setSystem("https://fhir.mayfield-is.co.uk/Id/")
+                        .setValue(UUID.randomUUID().toString());
+
+                bundle.setType(Bundle.BundleType.TRANSACTION);
+                fileCnt++;
+            }
+            Bundle.BundleEntryComponent entry = bundle.addEntry()
+                    .setFullUrl(UUID_Prefix + UUID.randomUUID().toString());
+            String conditionalUrl = "identifier=https://www.arcgis.com/fhir/CountyUAs_cases|" +  location.getIdentifierFirstRep().getValue() + "-" +stamp.format(reportDate);
+            entry.getRequest()
+                    .setMethod(Bundle.HTTPVerb.GET)
+                    .setUrl("MeasureReport?" + conditionalUrl);
+            count++;
+        }
+        if (bundle != null && bundle.getEntry().size() > 0) {
+            ProcessYesterday(bundle);
+        }
+
+
+    }
+
+
+    private void ProcessYesterday(Bundle bundle) {
+        log.info("Processing Yesterdays data");
+        Bundle resp = client.transaction().withBundle(bundle).execute();
+        for (Bundle.BundleEntryComponent entry : resp.getEntry()) {
+            if (entry.hasResource()) {
+                for (Bundle.BundleEntryComponent result : ((Bundle) entry.getResource()).getEntry()) {
+                    MeasureReport report = (MeasureReport) result.getResource();
+                    pastMeasures.put(report.getReporter().getReference(),report);
+                }
+            }
+        }
+    }
+
+     */
 
       /*
     private void FixLocation() {
@@ -511,5 +652,38 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
      */
 
+
+          /*
+                MeasureReport last = pastMeasures.get("Location/"+location.getIdElement().getIdPart());
+                if (last != null) {
+                    group = report.addGroup();
+                    group.setCode(
+                            new CodeableConcept().addCoding(
+                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
+                                            .setCode("NEWCASES")
+                                            .setDisplay("COVID-19 NEW CASES")
+                            )
+                    )
+                            .addPopulation().setCount(population);
+                    Quantity newCases = new Quantity();
+                    newCases.setValue(qty.getValue().subtract(last.getGroupFirstRep().getMeasureScore().getValue()));
+                    group.setMeasureScore(newCases);
+
+                    group = report.addGroup();
+                    group.setCode(
+                            new CodeableConcept().addCoding(
+                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
+                                            .setCode("NEWCASES/MILLION")
+                                            .setDisplay("COVID-19 New Cases Per million")
+                            )
+                    )
+                            .addPopulation().setCount(1000000);
+                    Quantity newadj = new Quantity();
+                    Double numadj = (newCases.getValue().doubleValue() / population) * 1000000;
+                    newadj.setValue(numadj);
+                    group.setMeasureScore(newadj);
+
+                }
+*/
 
 }
