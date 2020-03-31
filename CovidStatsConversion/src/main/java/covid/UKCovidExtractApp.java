@@ -40,6 +40,9 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     private Map<String,Location> locations = new HashMap<>();
 
+    private Map<String, BigDecimal> hi = new HashMap<>();
+    private Map<String, BigDecimal> mdi = new HashMap<>();
+
   //  private Map<String,MeasureReport> pastMeasures = new HashMap<>();
 
     ClassLoader classLoader = getClass().getClassLoader();
@@ -73,6 +76,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
         ldt = ldt.minusDays(1);
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
+        ProcessDeprivation();
         // Population
         // Locations
 
@@ -81,17 +85,42 @@ public class UKCovidExtractApp implements CommandLineRunner {
         ProcessLocationsFile("EnglandRegions.csv");
         ProcessLocationsFile("LocalAuthority.csv");
 /*
-        Disable for now, can use to correct past results.
-        ProcessHistoric();
-  */
+  //      Disable for now, can use to correct past results.
+  //      ProcessHistoric();
+
 
         // Process Daily UA File
         reports = new ArrayList<>();
         ProcessDailyUAFile(today);
         CalculateRegions(dateStamp.format(today));
+*/
 
 
+    }
 
+    private void ProcessDeprivation() {
+        InputStream zis = classLoader.getResourceAsStream("Deprivation.csv");
+        try {
+            Reader reader = new InputStreamReader(zis, Charsets.UTF_8);
+
+            CSVIterator iterator = new CSVIterator(new CSVReader(reader, ',', '\"', 0));
+            String[] header = null;
+            int count = 0;
+            for (CSVIterator it = iterator; it.hasNext(); ) {
+
+                if (count == 0) {
+                    header = it.next();
+                } else {
+                    String[] nextLine = it.next();
+               //     log.info("{} cnt = {} {}",nextLine[0],nextLine[1], nextLine[2]);
+                    hi.put(nextLine[0],new BigDecimal(nextLine[1]));
+                    mdi.put(nextLine[0],new BigDecimal(nextLine[2]));
+                }
+                count++;
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
     }
 
     private void ProcessHistoric() {
@@ -475,9 +504,22 @@ public class UKCovidExtractApp implements CommandLineRunner {
                     .getIdentifier()
                     .setSystem(ONSSystem).setValue(theRecord[2]);
 
-            Extension extension = location.addExtension();
-            extension.setUrl("https://fhir.mayfield-is.co.uk/Population");
-            extension.setValue(new IntegerType().setValue(Integer.parseInt(theRecord[4])));
+            Extension extensionpop = location.addExtension();
+            extensionpop.setUrl("https://fhir.mayfield-is.co.uk/Population");
+            extensionpop.setValue(new IntegerType().setValue(Integer.parseInt(theRecord[4])));
+
+            BigDecimal hibd = hi.get(theRecord[2]);
+            if (hibd != null) {
+                Extension extension = location.addExtension();
+                extension.setUrl("https://fhir.mayfield-is.co.uk/HI");
+                extension.setValue(new Quantity().setValue(hibd));
+            }
+            BigDecimal mdibd = mdi.get(theRecord[2]);
+            if (mdibd != null) {
+                Extension extension = location.addExtension();
+                extension.setUrl("https://fhir.mayfield-is.co.uk/MDI");
+                extension.setValue(new Quantity().setValue(mdibd));
+            }
             locations.put(theRecord[0],location);
         }
 
