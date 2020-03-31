@@ -58,9 +58,9 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     Date today = null;
 
-    IGenericClient client = ctxFHIR.newRestfulGenericClient("https://fhir.test.xgenome.co.uk/R4");
-  //IGenericClient client = ctxFHIR.newRestfulGenericClient("http://localhost:8186/R4");
-
+  // IGenericClient client = ctxFHIR.newRestfulGenericClient("https://fhir.test.xgenome.co.uk/R4");
+    IGenericClient client = ctxFHIR.newRestfulGenericClient("http://fhirserver-env-1.eba-aepmzc4d.eu-west-2.elasticbeanstalk.com:8186/R4");
+   // IGenericClient client = ctxFHIR.newRestfulGenericClient("https://fhir-test-526344451.eu-west-2.elb.amazonaws.com/R4");
 
     @Override
     public void run(String... args) throws Exception {
@@ -70,7 +70,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
         Date in = new Date();
         LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
         // Set to date before
-       // ldt = ldt.minusDays(1);
+        ldt = ldt.minusDays(1);
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
         // Population
