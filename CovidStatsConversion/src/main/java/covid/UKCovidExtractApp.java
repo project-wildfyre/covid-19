@@ -84,17 +84,14 @@ public class UKCovidExtractApp implements CommandLineRunner {
         ProcessLocationsFile("UK.csv");
         ProcessLocationsFile("EnglandRegions.csv");
         ProcessLocationsFile("LocalAuthority.csv");
-/*
+
   //      Disable for now, can use to correct past results.
   //      ProcessHistoric();
-
 
         // Process Daily UA File
         reports = new ArrayList<>();
         ProcessDailyUAFile(today);
         CalculateRegions(dateStamp.format(today));
-*/
-
 
     }
 
@@ -220,7 +217,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
 
             }
-            log.info(ctxFHIR.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
+         //   log.info(ctxFHIR.newJsonParser().setPrettyPrint(true).encodeResourceToString(bundle));
             Bundle resp = client.transaction().withBundle(bundle).execute();
         } catch (IOException e) {
             throw new InternalErrorException(e);
@@ -508,13 +505,13 @@ public class UKCovidExtractApp implements CommandLineRunner {
             extensionpop.setUrl("https://fhir.mayfield-is.co.uk/Population");
             extensionpop.setValue(new IntegerType().setValue(Integer.parseInt(theRecord[4])));
 
-            BigDecimal hibd = hi.get(theRecord[2]);
+            BigDecimal hibd = hi.get(theRecord[0]);
             if (hibd != null) {
                 Extension extension = location.addExtension();
                 extension.setUrl("https://fhir.mayfield-is.co.uk/HI");
                 extension.setValue(new Quantity().setValue(hibd));
             }
-            BigDecimal mdibd = mdi.get(theRecord[2]);
+            BigDecimal mdibd = mdi.get(theRecord[0]);
             if (mdibd != null) {
                 Extension extension = location.addExtension();
                 extension.setUrl("https://fhir.mayfield-is.co.uk/MDI");
@@ -552,6 +549,11 @@ public class UKCovidExtractApp implements CommandLineRunner {
                 report.setType(MeasureReport.MeasureReportType.SUMMARY);
                 report.setReporter(new Reference().setDisplay(location.getName()).setReference(location.getId()));
                 report.setMeasure("https://www.arcgis.com/fhir/Measure/CountyUAs_cases");
+
+                report.getSubject()
+                        .setDisplay(theRecord[1])
+                        .setReference(location.getId());
+
                 Quantity qty = new Quantity();
                 qty.setValue(new BigDecimal(Integer.parseInt(theRecord[2].trim())));
 
@@ -580,9 +582,36 @@ public class UKCovidExtractApp implements CommandLineRunner {
                 qtyadj.setValue(num);
                 group.setMeasureScore(qtyadj);
 
-                report.getSubject()
-                        .setDisplay(theRecord[1])
-                        .setReference(location.getId());
+
+                Extension hi = location.getExtensionByUrl("https://fhir.mayfield-is.co.uk/HI");
+                   if (hi != null) {
+                       group = report.addGroup();
+                       group.setCode(
+                               new CodeableConcept().addCoding(
+                                       new Coding().setSystem("http://fhir.mayfield-is.co.uk")
+                                               .setCode("HI")
+                                               .setDisplay("Health Index")
+                               )
+                       )
+                               .addPopulation().setCount(32845);
+
+                       group.setMeasureScore((Quantity) hi.getValue());
+                   }
+                Extension mdi = location.getExtensionByUrl("https://fhir.mayfield-is.co.uk/MDI");
+
+                if (mdi != null) {
+                    group = report.addGroup();
+                    group.setCode(
+                            new CodeableConcept().addCoding(
+                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
+                                            .setCode("MDI")
+                                            .setDisplay("Multiple Depravity Index")
+                            )
+                    )
+                            .addPopulation().setCount(32845);
+
+                    group.setMeasureScore((Quantity) mdi.getValue());
+                }
 
                 reports.add(report);
             } else {
