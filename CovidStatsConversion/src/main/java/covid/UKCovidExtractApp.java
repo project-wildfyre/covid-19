@@ -42,6 +42,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
     private Map<String, BigDecimal> hi = new HashMap<>();
     private Map<String, BigDecimal> mdi = new HashMap<>();
+    private Map<String, BigDecimal> population = new HashMap<>();
 
   //  private Map<String,MeasureReport> pastMeasures = new HashMap<>();
 
@@ -77,13 +78,17 @@ public class UKCovidExtractApp implements CommandLineRunner {
         today = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
         ProcessDeprivation();
+
         // Population
-        // Locations
 
         log.info("Processing Locations");
-        ProcessLocationsFile("UK.csv");
-        ProcessLocationsFile("EnglandRegions.csv");
-        ProcessLocationsFile("LocalAuthority.csv");
+        ProcessPopulationsFile("UK.csv");
+        ProcessPopulationsFile("EnglandRegions.csv");
+        ProcessPopulationsFile("LocalAuthority.csv");
+
+        // Locations
+        ProcessLocationsFile("E12_RGN");
+        /*
 
   //      Disable for now, can use to correct past results.
   //      ProcessHistoric();
@@ -92,7 +97,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
         reports = new ArrayList<>();
         ProcessDailyUAFile(today);
         CalculateRegions(dateStamp.format(today));
-
+*/
     }
 
     private void ProcessDeprivation() {
@@ -295,7 +300,7 @@ public class UKCovidExtractApp implements CommandLineRunner {
 
             if ((count % batchSize) == 0 ) {
 
-                if (bundle != null) processLocations(bundle, fileCnt);
+               // if (bundle != null) processLocations(bundle, fileCnt);
                 bundle = new Bundle();
                 bundle.getIdentifier().setSystem("https://fhir.mayfield-is.co.uk/Id/")
                         .setValue(UUID.randomUUID().toString());
@@ -310,14 +315,41 @@ public class UKCovidExtractApp implements CommandLineRunner {
             entry.getRequest()
                     .setMethod(Bundle.HTTPVerb.PUT)
                     .setUrl("Location?" + conditionalUrl);
-           count++;
+            count++;
         }
         if (bundle != null && bundle.getEntry().size() > 0) {
-            processLocations(bundle,fileCnt);
+        // TODO    processLocations(bundle,fileCnt);
         }
 
 
 
+// Log the response
+
+    }
+
+    private void ProcessPopulationsFile(String fileName) throws Exception {
+
+        InputStream zis = classLoader.getResourceAsStream(fileName);
+
+        try {
+            Reader reader = new InputStreamReader(zis, Charsets.UTF_8);
+
+            CSVIterator iterator = new CSVIterator(new CSVReader(reader, ',', '\"', 0));
+            int count = 0;
+            for (CSVIterator it = iterator; it.hasNext(); ) {
+
+                if (count == 0) {
+                    it.next();
+                } else {
+                    String[] nextLine = it.next();
+                    log.info("{} cnt = {}",nextLine[0],nextLine[4]);
+                    population.put(nextLine[0],new BigDecimal(nextLine[4]));
+                }
+                count++;
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+        }
 // Log the response
 
     }
@@ -724,37 +756,6 @@ public class UKCovidExtractApp implements CommandLineRunner {
      */
 
 
-          /*
-                MeasureReport last = pastMeasures.get("Location/"+location.getIdElement().getIdPart());
-                if (last != null) {
-                    group = report.addGroup();
-                    group.setCode(
-                            new CodeableConcept().addCoding(
-                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
-                                            .setCode("NEWCASES")
-                                            .setDisplay("COVID-19 NEW CASES")
-                            )
-                    )
-                            .addPopulation().setCount(population);
-                    Quantity newCases = new Quantity();
-                    newCases.setValue(qty.getValue().subtract(last.getGroupFirstRep().getMeasureScore().getValue()));
-                    group.setMeasureScore(newCases);
 
-                    group = report.addGroup();
-                    group.setCode(
-                            new CodeableConcept().addCoding(
-                                    new Coding().setSystem("http://fhir.mayfield-is.co.uk")
-                                            .setCode("NEWCASES/MILLION")
-                                            .setDisplay("COVID-19 New Cases Per million")
-                            )
-                    )
-                            .addPopulation().setCount(1000000);
-                    Quantity newadj = new Quantity();
-                    Double numadj = (newCases.getValue().doubleValue() / population) * 1000000;
-                    newadj.setValue(numadj);
-                    group.setMeasureScore(newadj);
-
-                }
-*/
 
 }
